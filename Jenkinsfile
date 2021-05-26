@@ -22,8 +22,11 @@ pipeline {
         stage('Make A Builder Image') {
             steps {
                 echo 'Starting to build the project builder docker image'
+                echo '1'
                 script {
+                    echo '2'
                     builderImage = docker.build("${ACCOUNT_REGISTRY_PREFIX}/example-webapp-builder:${GIT_COMMIT_HASH}", "-f ./Dockerfile.builder .")
+                    echo '3'
                     builderImage.push()
                     builderImage.push("${env.GIT_BRANCH}")
                     builderImage.inside('-v $WORKSPACE:/output -u root') {
